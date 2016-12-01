@@ -1,13 +1,3 @@
-/****************************************************************************
-** SAKARYA ÜNIVERSITESI
-** BILGISAYAR VE BILISIM BILIMLERI FAKÜLTESI
-** BILGISAYAR MÜHENDISLIGI BÖLÜMÜ
-** PROGRAMLAMAYA GIRISI DERSI
-**
-** ÖGRENCI ADI......:Enes Öztürk
-** ÖGRENCI NUMARASI.:G151210022
-** DERS GRUBU…………………:B Grubu
-****************************************************************************/
 #include <iostream>
 #include <cstdlib>
 #include <time.h>
