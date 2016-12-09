@@ -13,6 +13,10 @@ public:
 	string	getPCode();
 	int		getPrice();
 
+	void listProducts();
+	void addProduct();
+	void deleteProduct(int productCode);
+
 	void	setPName(string pName);
 	void	setPCode(string pCode);
 

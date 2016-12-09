@@ -15,6 +15,11 @@ public:
 	void setDate(string date);
 	void setTrNo(string trno);
 
+	void listCustomers();
+	void addCustomer();
+	void deleteCustomer(int trno);
+	void listCustomerMenu(int tcno2);
+
 	string getTrNo();
 	string getTelNo();
 	string getName();
