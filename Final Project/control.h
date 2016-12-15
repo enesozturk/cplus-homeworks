@@ -1,28 +1,24 @@
 #pragma once
+#include <string>
 
-#include<string>
 using namespace std;
-class Kontrol
+
+class Control
 {
 public:
 
-	void tavanCiz(int genislik);
+	void printCeiling(int width); //function that prints ceiling of box
+	void printBottom(int width); //function that prints bottom lines of box
+	void printIntermediate(int width, string text); //function that prints intermediate lines of box
+	void printIntermediate(int width); //overrided function
+	void printSeparatrix(int width); //function that prints separatrixes of box
 
-	void zeminCiz(int genislik);
+	void askToContinue(); //ask user to continue or not
 
-	void araCiz(int genislik, string yazi);
+	int  printMainMenu(); //print main menu function
 
-	void ayracCiz(int genislik);
+	void printCustomerMenu(); //print customer menu function
 
-	int  anaMenuCiz(int a);
+	void printAdminMenu(); //print admin menu function
 
-	void musteriMenuCiz();
-
-	void yoneticiMenuCiz();
-
-	/*
-	*	istenilen fonksiyonlar eklenebilir.
-	*
-	*/
-private:
 };

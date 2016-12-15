@@ -1,18 +1,22 @@
-#include <iostream>
-#include <fstream>
 #include "customer.h"
 #include "control.h"
-#include "product.h"
-#include "process.h"
+#include "date.h"
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <Windows.h>
 
+//function descriptions has been explained in header files
 using namespace std;
 
-string isimlerListesi[] = { "Ahmet", "Osman", "Ali", "Mehmet", "Veli", "Sarp", "Emrah", "Eser", "Erbil", "Oguz", "Can", "Murat", "Sinan", "Mert", "Mete", "Sait", "Ervah", "Cihat", "Orhan", "Fatih", "Ahu", "Binnur", "Bilge", "Candan", "Cahide", "Demet", "Deste", "Gizem", "Ece", "Elanur", "Fatma", "Fidan", "Gamze", "Hale", "Hilal", "Irmak", "Jale", "Kader", "Kamile", "Lale" };
-string soyisimlerListesi[] = { "KANDEMIR", "ORHON", "VURAL", "YAVUZ", "UZ", "ERDEM", "DEDE", "UYANIK", "ASLAN", "ERKURAN", "ER", "DAL", "KARAKUM", "YILMAZ", "TAHTACI", "KAYA", "ERGE", "ONUK", "TOPAL", "BEDER" };
+char STRAIGHTLINEC = 186;
+string nameList[] = { "Ahmet", "Osman", "Ali", "Mehmet", "Veli", "Sarp", "Emrah", "Eser", "Erbil", "Oguz", "Can", "Murat", "Sinan", "Mert", "Mete", "Sait", "Ervah", "Cihat", "Orhan", "Fatih", "Ahu", "Binnur", "Bilge", "Candan", "Cahide", "Demet", "Deste", "Gizem", "Ece", "Elanur", "Fatma", "Fidan", "Gamze", "Hale", "Hilal", "Irmak", "Jale", "Kader", "Kamile", "Lale" };
+string surnameList[] = { "KANDEMIR", "ORHON", "VURAL", "YAVUZ", "UZ", "ERDEM", "DEDE", "UYANIK", "ASLAN", "ERKURAN", "ER", "DAL", "KARAKUM", "YILMAZ", "TAHTACI", "KAYA", "ERGE", "ONUK", "TOPAL", "BEDER" };
 
-Kontrol control;
-Product p1;
-Islem pr1;
+Control controlC;
+
+Customer::Customer(){
+}
 
 void Customer::addCustomer(){
 	srand(time(NULL));
@@ -20,57 +24,90 @@ void Customer::addCustomer(){
 	int nameIndex = rand() % 40;
 	int surnameIndex = rand() % 20;
 
-	cName = isimlerListesi[nameIndex];
-	cSurname = soyisimlerListesi[surnameIndex];
+	cName = nameList[nameIndex];
+	cSurname = surnameList[surnameIndex];
 
 	cTrNo = generateTrNo();
 	cTelNo = generateTelNo();
 
-	control.tavanCiz(20);
-	control.araCiz(20, " Added Customer");
-	control.ayracCiz(20);
-	control.araCiz(20, " Name: " + getName());
-	control.araCiz(20, " Surname: " + getSurname());
-	control.araCiz(20, " Tel No: " + getTelNo());
-	control.araCiz(20, " Tr No: " + getTrNo());
-	control.zeminCiz(20);
-	save();
+	controlC.printCeiling(20);
+	controlC.printIntermediate(20, " Added Customer");
+	controlC.printSeparatrix(20);
+	controlC.printIntermediate(20, " Name: " + getName());
+	controlC.printIntermediate(20, " Surname: " + getSurname());
+	controlC.printIntermediate(20, " Tel No: " + getTelNo());
+	controlC.printIntermediate(20, " T.R No: " + getTrNo());
+	controlC.printBottom(20);
+	saveCustomer();
 	
 }
-void Customer::deleteCustomer(int tcno){
-	/*fstream del;
-	
-	del.open("Customers.txt", fstream::in | fstream::out | fstream::app);
-	del.clear("Customers.txt", fstream::in | fstream::out | fstream::app)
-	if (del.is_open() == true){
-		de << getName() << " " << getSurname() << " " << getTrNo() << " " << getTelNo() << endl;
-	}*/
+void Customer::deleteCustomer(){
+	listCustomers();
+	cout << "tr:";
+	string tr;
+	cin >> tr;
+	removeCustomer(tr);
 }
-void Customer::listCustomerMenu(int tcno2){
-	
+void Customer::listCustomers(){
+	controlC.printCeiling(40);
+	controlC.printIntermediate(40, " Customers");
+	controlC.printSeparatrix(40);
+	readCustomer();
+	controlC.printBottom(40);
 }
 
-Customer::Customer(){
-}
-
-void Customer::save(){
+void Customer::saveCustomer(){
 	fstream save;
 
 	save.open("Customers.txt", fstream::in | fstream::out | fstream::app);
 
 	if (save.is_open() == true){
-		save << getName() << " " << getSurname() << " " << getTrNo() << " " << getTelNo() << endl;
+		save << getName() << " " << getSurname() << " " << getTrNo() << " " << getTelNo() << " " << cDate.generateDate() << endl;
 	}
 	
 	save.close();
 }
+void Customer::readCustomer(){
+	fstream read;
+	read.open("Customers.txt", fstream::in);
+	if (read.is_open() == true){
+		string customerName, customerSurname, customerTrNo, customerTelNo;
+		string LineC;
+		while (read >> customerName >> customerSurname >> customerTrNo >> customerTelNo){
+			LineC = customerName + " " + customerSurname + " " + customerTrNo + " " + customerTelNo;
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 9);
+			cout << STRAIGHTLINEC;
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+			cout << std::left << setw(40) << LineC;
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 9);
+			cout << STRAIGHTLINEC << endl;
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+		}
+		
+	}
+	read.close();
+}
+void Customer::removeCustomer(string tr){
+	fstream temp, customers;
 
-void Customer::listCustomers(){
-	control.tavanCiz(40);
-	control.araCiz(40, " Customers");
-	control.ayracCiz(40);
-	control.araCiz(40, getName()+" " + getSurname()+" " + getTrNo() + " " + getTelNo());
-	control.zeminCiz(40);
+	customers.open("Customers.txt", fstream::in | fstream::out | fstream::app);
+	temp.open("temp.txt", fstream::in | fstream::out | fstream::app);
+
+	if (customers.is_open() == true){
+		string customerName, customerSurname, customerTrNo, customerTelNo;
+		string satir;
+		while (customers >> customerName >> customerSurname >> customerTrNo >> customerTelNo){
+			if (customerTrNo != tr){
+				temp << customerName << " " << customerSurname << " " << customerTrNo << " " << customerTelNo << endl;
+			}
+		}
+	}
+	customers.close();
+	temp.close();
+	remove("Customers.txt");
+	rename("temp.txt", "Customers.txt");
+	system("cls");
+	listCustomers();
 }
 
 void Customer::setName(string name){
@@ -85,6 +122,7 @@ void Customer::setTelNo(string telno){
 void Customer::setTrNo(string trno){
 	cTrNo = trno;
 }
+
 
 string Customer::getName(){
 	return cName;

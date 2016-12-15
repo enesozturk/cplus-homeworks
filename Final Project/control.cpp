@@ -1,28 +1,30 @@
 #include "control.h"
-#include "process.h"
 #include "product.h"
+#include "process.h"
 #include "customer.h"
 #include <iostream>
-#include<iomanip>
-#include<Windows.h>
+#include <iomanip>
+#include <Windows.h>
+
+//function descriptions has been explained in header files
 using namespace std;
 
-char DUZCIZGI = 205;
-char SOLUSTKOSE = 201;
-char SAGUSTKOSE = 187;
-char DIKEYCIZGI = 186;
-char ASAGIAYRAC = 203;
-char SOLALTKOSE = 200;
-char SAGALTKOSE = 188;
-char YUKARIAYRAC = 202;
-char YATAYSAGAAYRAC = 204; //
-char YATAYSOLAAYRAC = 185;
+char STRAIGHTLINE = 205;
+char LEFTTOPCORNER = 201;
+char RIGHTTOPCORNER = 187;
+char VERTICALLINE = 186;
+char DOWNSEPARATRIX = 203;
+char LEFTBOTTOMCORNER = 200;
+char RIGHTBOTTOMCORNER = 188;
+char UPSEPARATRIX = 202;
+char HORIZONTALRIGHTSEP = 204; 
+char HORIZONTALLEFTSEP = 185;
 
-Product p2;
-Islem pr2;
-Customer c2;
+Product productC;
+Process processC;
+Customer customerC;
 
-enum RENKLER
+enum COLORS
 {
 	BLACK = 0,
 	BLUE = 1,
@@ -41,144 +43,201 @@ enum RENKLER
 	YELLOW = 14,
 	WHITE = 15
 };
-void renkAta(int yazirenk)
+void assignColor(int textColor)
 {
-	int arkaplan = 0;
+	int backgroundColor = 0;
 
-	int sonRenk;
+	int lastColor;
 
-	sonRenk = (16 * arkaplan) + yazirenk;
+	lastColor = (16 * backgroundColor) + textColor;
 
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), sonRenk);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), lastColor);
 }
-void karakterCikar(char karakter, RENKLER renk)
+void printCharacter(char character, COLORS color)
 {
-	renkAta(renk);
-	cout << karakter;
-	renkAta(WHITE);
+	assignColor(color);
+	cout << character;
+	assignColor(WHITE);
+
 }
 
-void Kontrol::tavanCiz(int genislik)
+void Control::printCeiling(int w)
 {
-	cout << SOLUSTKOSE;
+	printCharacter(LEFTTOPCORNER,LIGHTBLUE);
 
-	for (int i = 0; i < genislik; i++)
-		cout << DUZCIZGI;
+	for (int i = 0; i < w; i++)
+		printCharacter(STRAIGHTLINE, LIGHTBLUE);
 
-	cout << SAGUSTKOSE;
+	printCharacter(RIGHTTOPCORNER, LIGHTBLUE);
 
 	cout << endl;
 
 }
-void Kontrol::zeminCiz(int genislik)
+void Control::printBottom(int w)
 {
-	cout << SOLALTKOSE;
+	printCharacter(LEFTBOTTOMCORNER, LIGHTBLUE);
 
-	for (int i = 0; i < genislik; i++)
-		cout << DUZCIZGI;
+	for (int i = 0; i < w; i++)
+		printCharacter(STRAIGHTLINE, LIGHTBLUE);
 
-	cout << SAGALTKOSE;
+	printCharacter(RIGHTBOTTOMCORNER, LIGHTBLUE);
 
 	cout << endl;
 }
-void Kontrol::araCiz(int genislik, string yazi)
+void Control::printIntermediate(int w, string text)
 {
-	cout << DIKEYCIZGI;
+	printCharacter(VERTICALLINE, LIGHTBLUE);
+		
+	cout << std::left << setw(w) << text;
 
-	cout << std::left << setw(genislik) << yazi;
-
-	cout << DIKEYCIZGI;
+	printCharacter(VERTICALLINE, LIGHTBLUE);
 	cout << endl;
 }
-void Kontrol::ayracCiz(int genislik)
+void Control::printIntermediate(int w)
 {
-	cout << YATAYSAGAAYRAC;
+	printCharacter(VERTICALLINE, LIGHTBLUE);
 
-	for (int i = 0; i < genislik; i++)
-		cout << DUZCIZGI;
-
-	cout << YATAYSOLAAYRAC;
+	cout << std::left;
+	customerC.readCustomer();
+	printCharacter(VERTICALLINE, LIGHTBLUE);
 
 	cout << endl;
 }
-int Kontrol::anaMenuCiz(int a)
+void Control::printSeparatrix(int w)
 {
-	tavanCiz(a);
-	araCiz(a, " Main Control Panel");
-	ayracCiz(a);
-	araCiz(a, " 1.Customer Panel");
-	araCiz(a, " 2.Admin Panel");
-	araCiz(a, " 3.Exit");
-	zeminCiz(a);
-	return 0;
+	printCharacter(HORIZONTALRIGHTSEP, LIGHTBLUE);
+
+	for (int i = 0; i < w; i++)
+		printCharacter(STRAIGHTLINE, LIGHTBLUE);
+
+	printCharacter(HORIZONTALLEFTSEP, LIGHTBLUE);
+
+	cout << endl;
 }
 
-void Kontrol::musteriMenuCiz()
+void Control::askToContinue(){
+	cout << "Do you want to return main menu? (Y/N): ";
+	char YN;
+	cin >> YN;
+	if (YN == 'y' || YN == 'Y'){
+		system("cls");
+		printMainMenu();
+	}
+}
+
+int Control::printMainMenu()
 {
-	c2.listCustomers();
-	tavanCiz(20);
-	araCiz(20, " Customer Panel");
-	ayracCiz(20);
-	araCiz(20, " 1.Buy Product");
-	araCiz(20, " 2.List Processes");
-	araCiz(20, " 3.Delete Process");
-	araCiz(20, " 4.Back");
-	zeminCiz(20);
-	int mSecim;
-	cout << "Secim: ";
-	cin >> mSecim;
-	switch (mSecim)
+	int mainMenuSelection;
+	printCeiling(20);
+	printIntermediate(20, " Main Control Panel");
+	printSeparatrix(20);
+	printIntermediate(20, " 1.Customer Panel");
+	printIntermediate(20, " 2.Admin Panel");
+	printIntermediate(20, " 3.Exit");
+	printBottom(20);
+	cout << "Selection: ";
+	cin >> mainMenuSelection;
+	switch (mainMenuSelection)
 	{
 	case 1:
-		int uCode;
-		p2.listProducts();
-		cout << "Urun kodu girin: ";
-		cin >> uCode;
+		printCustomerMenu();
 		break;
 	case 2:
+		printAdminMenu();
 		break;
 	case 3:
+		break;
+	default:
+		cout << "It's different than the selections!" << endl;
+		askToContinue();
+		break;
+	}
+	return 0;
+}
+void Control::printCustomerMenu()
+{
+	customerC.listCustomers();
+	processC.bringTrNo();
+	printCeiling(20);
+	printIntermediate(20, " Customer Panel");
+	printSeparatrix(20);
+	printIntermediate(20, " 1.Buy Product");
+	printIntermediate(20, " 2.List Processes");
+	printIntermediate(20, " 3.Delete Process");
+	printIntermediate(20, " 4.Back");
+	printBottom(20);
+	int customerMenuSelection;
+	cout << "Selection: ";
+	cin >> customerMenuSelection;
+	switch (customerMenuSelection)
+	{
+	case 1:
+		productC.listProducts();
+		processC.bringProductCode();
+		processC.saveProcess();
+		cout << "Saved.." << endl;
+		askToContinue();
+		break;
+	case 2:
+		processC.listProcesses();
+		askToContinue();
+		break;
+	case 3:
+		processC.deleteProcess();
+		break;
+	case 4:
+		system("cls");
+		printMainMenu();
 		break;
 	default:
 		break;
 	}
 }
-
-void Kontrol::yoneticiMenuCiz()
+void Control::printAdminMenu()
 {
-	tavanCiz(20);
-	araCiz(20, " Admin Panel");
-	ayracCiz(20);
-	araCiz(20, " 1.Add Customer");
-	araCiz(20, " 2.List Customers");
-	araCiz(20, " 3.Delete Customer");
-	araCiz(20, " 4.Add Product");
-	araCiz(20, " 5.List Products");
-	araCiz(20, " 6.Delete Products");
-	araCiz(20, " 7.Back");
-	zeminCiz(20);
-	int yoneticiSecim;
-	cout << "Secim: ";
-	cin >> yoneticiSecim;
-	switch (yoneticiSecim)
+	printCeiling(20);
+	printIntermediate(20, " Admin Panel");
+	printSeparatrix(20);
+	printIntermediate(20, " 1.Add Customer");
+	printIntermediate(20, " 2.List Customers");
+	printIntermediate(20, " 3.Delete Customer");
+	printIntermediate(20, " 4.Add Product");
+	printIntermediate(20, " 5.List Products");
+	printIntermediate(20, " 6.Delete Products");
+	printIntermediate(20, " 7.Back");
+	printBottom(20);
+	int adminMenuSelection;
+	cout << "Selection: ";
+	cin >> adminMenuSelection;
+	switch (adminMenuSelection)
 	{
 	case 1:
-		c2.addCustomer();
+		customerC.addCustomer();
+		askToContinue();
 		break;
 	case 2:
-		c2.listCustomers();
+		customerC.listCustomers();
+		askToContinue();
 		break;
 	case 3:
-		// musteri silinecek
+		customerC.deleteCustomer();
+		askToContinue();
 		break;
 	case 4:
-		p2.addProduct();
+		productC.addProduct();
+		askToContinue();
 		break; 
 	case 5:
-		p2.listProducts();
+		productC.listProducts();
+		askToContinue();
 		break;
 	case 6:
-		//urun silinecek
+		productC.deleteProduct();
+		askToContinue();
+		break;
+	case 7:
+		system("cls");
+		printMainMenu();
 		break;
 	default:
 		break;

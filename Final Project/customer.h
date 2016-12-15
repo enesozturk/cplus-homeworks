@@ -1,4 +1,5 @@
 #pragma once
+#include "date.h"
 #include <string>
 #include <time.h>
 
@@ -6,33 +7,33 @@ using namespace std;
 
 class Customer{
 public:
-	Customer();
-	void save();
+	Customer(); //Constructor
+	void saveCustomer(); //save customer to a text file
+	void readCustomer(); //read customer from a text file
+	void removeCustomer(string tr); //remove selected line from text file
 
-	void setName(string name);
-	void setTelNo(string telno);
-	void setSurname(string surname);
-	void setDate(string date);
-	void setTrNo(string trno);
+	void setName(string name); //set customer name
+	void setSurname(string surname); //set customer surname
+	void setTelNo(string telno); //set customer telephone number
+	void setTrNo(string trno); //set customer TR number
+	void setDate(Date date); //set customer bridth date
 
-	void listCustomers();
-	void addCustomer();
-	void deleteCustomer(int trno);
-	void listCustomerMenu(int tcno2);
+	void listCustomers(); //print list of customers function
+	void addCustomer(); //add a customer and display function
+	void deleteCustomer(); //delete customer from txt file
 
-	string getTrNo();
-	string getTelNo();
-	string getName();
+	string getName(); //get functions
 	string getSurname();
-	//Date getDate();
+	string getTrNo(); 
+	string getTelNo();
+	string getDate();
 
-	
-	string generateTrNo();
-	string generateTelNo();
+	string generateTrNo(); //generate random TR number
+	string generateTelNo(); //generate random Tel number
 private:
 	string cName;
 	string cSurname;
 	string cTrNo;
 	string cTelNo;
-	//Date cBrithDay;
+	Date cDate;
 };
