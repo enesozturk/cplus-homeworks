@@ -1,14 +1,22 @@
 #pragma once 
 #include <string>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
-class Date{
+class Date
+{
 private:
-	string date,day,mount,year;
+	int day;
+	int month;
+	int year;
+	string date;
 public:
 	Date();
-	void bringDate();
-	void generateDate();
-	void getDate();
+
+	void setDate(string d);
+
+	string getDate();
+
 };

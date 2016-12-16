@@ -1,25 +1,19 @@
 #include "date.h"
-#include <time.h>
 #include <iostream>
 
 using namespace std;
 
-
 Date::Date(){
-
+	day = rand() % (30 - 1 + 1) + 1;
+	month = rand() % (12 - 1 + 1) + 1;
+	year = rand() % (2016 - 1950 + 1) + 1950;
+	date = to_string(day) + " " + to_string(month) + " " + to_string(year);
 }
-
-void Date::generateDate(){
-	srand(time(NULL));
-	day = '1' + rand() % 30;
-	mount = '1' + rand() % 11;
-	year = '50' + rand() % 1950;
-	date = day + "/" + mount + "/" + year;
-	cout << date;
+void Date::setDate(string d)
+{
+	date = d;
 }
-
-void Date::getDate(){
-
+string Date::getDate()
+{
+	return date;
 }
-
-

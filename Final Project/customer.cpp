@@ -20,6 +20,7 @@ Customer::Customer(){
 
 void Customer::addCustomer(){
 	srand(time(NULL));
+	//Date cDate;
 
 	int nameIndex = rand() % 40;
 	int surnameIndex = rand() % 20;
@@ -29,6 +30,7 @@ void Customer::addCustomer(){
 
 	cTrNo = generateTrNo();
 	cTelNo = generateTelNo();
+	BrithDate = randDate[nameIndex].getDate();
 
 	controlC.printCeiling(20);
 	controlC.printIntermediate(20, " Added Customer");
@@ -37,6 +39,7 @@ void Customer::addCustomer(){
 	controlC.printIntermediate(20, " Surname: " + getSurname());
 	controlC.printIntermediate(20, " Tel No: " + getTelNo());
 	controlC.printIntermediate(20, " T.R No: " + getTrNo());
+	controlC.printIntermediate(20, " Date: " + BrithDate);
 	controlC.printBottom(20);
 	saveCustomer();
 	
@@ -62,7 +65,7 @@ void Customer::saveCustomer(){
 	save.open("Customers.txt", fstream::in | fstream::out | fstream::app);
 
 	if (save.is_open() == true){
-		save << getName() << " " << getSurname() << " " << getTrNo() << " " << getTelNo() << " " << cDate.generateDate() << endl;
+		save << getName() << " " << getSurname() << " " << getTrNo() << " " << getTelNo() << " " << BrithDate << endl;
 	}
 	
 	save.close();
@@ -73,8 +76,8 @@ void Customer::readCustomer(){
 	if (read.is_open() == true){
 		string customerName, customerSurname, customerTrNo, customerTelNo;
 		string LineC;
-		while (read >> customerName >> customerSurname >> customerTrNo >> customerTelNo){
-			LineC = customerName + " " + customerSurname + " " + customerTrNo + " " + customerTelNo;
+		while (read >> customerName >> customerSurname >> customerTrNo >> customerTelNo >> BrithDate){
+			LineC = customerName + " " + customerSurname + " " + customerTrNo + " " + customerTelNo + " " + BrithDate;
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 9);
 			cout << STRAIGHTLINEC;
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
@@ -96,9 +99,9 @@ void Customer::removeCustomer(string tr){
 	if (customers.is_open() == true){
 		string customerName, customerSurname, customerTrNo, customerTelNo;
 		string satir;
-		while (customers >> customerName >> customerSurname >> customerTrNo >> customerTelNo){
+		while (customers >> customerName >> customerSurname >> customerTrNo >> customerTelNo >> BrithDate){
 			if (customerTrNo != tr){
-				temp << customerName << " " << customerSurname << " " << customerTrNo << " " << customerTelNo << endl;
+				temp << customerName << " " << customerSurname << " " << customerTrNo << " " << customerTelNo << BrithDate << endl;
 			}
 		}
 	}
@@ -123,7 +126,6 @@ void Customer::setTrNo(string trno){
 	cTrNo = trno;
 }
 
-
 string Customer::getName(){
 	return cName;
 }
@@ -135,6 +137,9 @@ string Customer::getTelNo(){
 }
 string Customer::getTrNo(){
 	return cTrNo;
+}
+Date Customer::getDate(){
+	return cDate;
 }
 
 string Customer::generateTrNo(){

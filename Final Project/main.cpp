@@ -7,7 +7,7 @@ int main(){
 
 	Control controlM;
 	controlM.printMainMenu();
-	
+
 	system("pause");
 	return 0;
 }

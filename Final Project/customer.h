@@ -26,7 +26,7 @@ public:
 	string getSurname();
 	string getTrNo(); 
 	string getTelNo();
-	string getDate();
+	Date getDate();
 
 	string generateTrNo(); //generate random TR number
 	string generateTelNo(); //generate random Tel number
@@ -35,5 +35,7 @@ private:
 	string cSurname;
 	string cTrNo;
 	string cTelNo;
+	string BrithDate;
 	Date cDate;
+	Date randDate[40];
 };
