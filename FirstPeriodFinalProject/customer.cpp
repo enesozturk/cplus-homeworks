@@ -18,29 +18,30 @@ Control controlC;
 Customer::Customer(){
 }
 
+//Adding - deleting - listing customers functions
 void Customer::addCustomer(){
 	srand(time(NULL));
-	//Date cDate;
 
 	int nameIndex = rand() % 40;
 	int surnameIndex = rand() % 20;
+	int dateIndex = nameIndex * surnameIndex;
 
 	cName = nameList[nameIndex];
 	cSurname = surnameList[surnameIndex];
 
 	cTrNo = generateTrNo();
 	cTelNo = generateTelNo();
-	BrithDate = randDate[nameIndex].getDate();
+	BrithDate = randDate[dateIndex].getDate();
 
-	controlC.printCeiling(20);
-	controlC.printIntermediate(20, " Added Customer");
-	controlC.printSeparatrix(20);
-	controlC.printIntermediate(20, " Name: " + getName());
-	controlC.printIntermediate(20, " Surname: " + getSurname());
-	controlC.printIntermediate(20, " Tel No: " + getTelNo());
-	controlC.printIntermediate(20, " T.R No: " + getTrNo());
-	controlC.printIntermediate(20, " Date: " + BrithDate);
-	controlC.printBottom(20);
+	controlC.printCeiling(30);
+	controlC.printIntermediate(30, " Added Customer");
+	controlC.printSeparatrix(30);
+	controlC.printIntermediate(30, " Name: " + getName());
+	controlC.printIntermediate(30, " Surname: " + getSurname());
+	controlC.printIntermediate(30, " Tel No: " + getTelNo());
+	controlC.printIntermediate(30, " T.R No: " + getTrNo());
+	controlC.printIntermediate(30, " Date: " + BrithDate);
+	controlC.printBottom(30);
 	saveCustomer();
 	
 }
@@ -52,13 +53,14 @@ void Customer::deleteCustomer(){
 	removeCustomer(tr);
 }
 void Customer::listCustomers(){
-	controlC.printCeiling(40);
-	controlC.printIntermediate(40, " Customers");
-	controlC.printSeparatrix(40);
+	controlC.printCeiling(50);
+	controlC.printIntermediate(50, " Customers");
+	controlC.printSeparatrix(50);
 	readCustomer();
-	controlC.printBottom(40);
+	controlC.printBottom(50);
 }
 
+//Saving-reading-removing customers from a txt file
 void Customer::saveCustomer(){
 	fstream save;
 
@@ -81,7 +83,7 @@ void Customer::readCustomer(){
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 9);
 			cout << STRAIGHTLINEC;
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-			cout << std::left << setw(40) << LineC;
+			cout << std::left << setw(50) << LineC;
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 9);
 			cout << STRAIGHTLINEC << endl;
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
@@ -113,6 +115,7 @@ void Customer::removeCustomer(string tr){
 	listCustomers();
 }
 
+/* setting variables - We don't need them, because these variables declared random.
 void Customer::setName(string name){
 	cName = name;
 }
@@ -125,7 +128,9 @@ void Customer::setTelNo(string telno){
 void Customer::setTrNo(string trno){
 	cTrNo = trno;
 }
+*/
 
+// getting variables - to take variables that declared random
 string Customer::getName(){
 	return cName;
 }
@@ -139,9 +144,10 @@ string Customer::getTrNo(){
 	return cTrNo;
 }
 Date Customer::getDate(){
-	return cDate;
+	return randDate[dateIndex];
 }
 
+//Generating random TR number and phone number
 string Customer::generateTrNo(){
 	string trNo = "";
 	for (int i = 0; i < 4; i++){

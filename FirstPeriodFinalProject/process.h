@@ -18,7 +18,6 @@ public:
 
 	void bringProcessCode(); //bring process code
 
-	void controlTR(string tr);
 	void saveProcess(); //save process to txt file
 	void readProcesses(); //read processes from txt file
 	void removeProcess(string c); //remove selected line from txt file

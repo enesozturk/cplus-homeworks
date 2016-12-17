@@ -16,6 +16,7 @@ Process::Process(){
 
 }
 
+//generating process trans code and getting TR number
 string Process::generateProcessCode(){
 	srand(time(NULL));
 	string cProcessCode = "";
@@ -31,22 +32,9 @@ void Process::bringProductCode(){
 void Process::bringTrNo(){
 	cout << "Enter TR No: ";
 	cin >> cCustomerTrNo;
-	controlTR(cCustomerTrNo);
 }
 
-void Process::controlTR(string tr){
-	fstream control;
-	control.open("Customers.txt", fstream::in | fstream::out | fstream::app);
-	if (control.is_open() == true){
-		if (control >> tr){
-			cout << "TR number has been found." << endl;
-		}
-		else{
-			cout << "TR number couldn't find!" << endl;
-		}
-	}
-	control.close();
-}
+//Saving processes to a txt file
 void Process::saveProcess(){
 	fstream save;
 
@@ -100,6 +88,7 @@ void Process::removeProcess(string transcode){
 	controlPr.askToContinue();
 }
 
+// Listing and deleting processing functions
 void Process::listProcesses(){
 	controlPr.printCeiling(40);
 	controlPr.printIntermediate(40, " Processes");

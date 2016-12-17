@@ -36,6 +36,6 @@ private:
 	string cTrNo;
 	string cTelNo;
 	string BrithDate;
-	Date cDate;
-	Date randDate[40];
+	Date randDate[800]; //There are 40 name and 20 surname, so we have 800 different combinations.
+	int nameIndex, surnameIndex, dateIndex;
 };

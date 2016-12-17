@@ -43,6 +43,8 @@ enum COLORS
 	YELLOW = 14,
 	WHITE = 15
 };
+
+//Assinging color for table lines
 void assignColor(int textColor)
 {
 	int backgroundColor = 0;
@@ -61,6 +63,7 @@ void printCharacter(char character, COLORS color)
 
 }
 
+//Printing lines to make table
 void Control::printCeiling(int w)
 {
 	printCharacter(LEFTTOPCORNER,LIGHTBLUE);
@@ -72,17 +75,6 @@ void Control::printCeiling(int w)
 
 	cout << endl;
 
-}
-void Control::printBottom(int w)
-{
-	printCharacter(LEFTBOTTOMCORNER, LIGHTBLUE);
-
-	for (int i = 0; i < w; i++)
-		printCharacter(STRAIGHTLINE, LIGHTBLUE);
-
-	printCharacter(RIGHTBOTTOMCORNER, LIGHTBLUE);
-
-	cout << endl;
 }
 void Control::printIntermediate(int w, string text)
 {
@@ -114,7 +106,19 @@ void Control::printSeparatrix(int w)
 
 	cout << endl;
 }
+void Control::printBottom(int w)
+{
+	printCharacter(LEFTBOTTOMCORNER, LIGHTBLUE);
 
+	for (int i = 0; i < w; i++)
+		printCharacter(STRAIGHTLINE, LIGHTBLUE);
+
+	printCharacter(RIGHTBOTTOMCORNER, LIGHTBLUE);
+
+	cout << endl;
+}
+
+//When program is finish, ask user to continue or not
 void Control::askToContinue(){
 	cout << "Do you want to return main menu? (Y/N): ";
 	char YN;
@@ -123,7 +127,7 @@ void Control::askToContinue(){
 		system("cls");
 		printMainMenu();
 	}
-}
+} 
 
 int Control::printMainMenu()
 {
@@ -137,7 +141,7 @@ int Control::printMainMenu()
 	printBottom(20);
 	cout << "Selection: ";
 	cin >> mainMenuSelection;
-	switch (mainMenuSelection)
+	switch (mainMenuSelection) //user selection with switch-case loop to choose process
 	{
 	case 1:
 		printCustomerMenu();
@@ -169,7 +173,7 @@ void Control::printCustomerMenu()
 	int customerMenuSelection;
 	cout << "Selection: ";
 	cin >> customerMenuSelection;
-	switch (customerMenuSelection)
+	switch (customerMenuSelection) //user selection with switch-case loop to choose process
 	{
 	case 1:
 		productC.listProducts();
@@ -209,7 +213,7 @@ void Control::printAdminMenu()
 	int adminMenuSelection;
 	cout << "Selection: ";
 	cin >> adminMenuSelection;
-	switch (adminMenuSelection)
+	switch (adminMenuSelection) //user selection with switch-case loop to choose process
 	{
 	case 1:
 		customerC.addCustomer();

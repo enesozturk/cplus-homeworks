@@ -7,12 +7,12 @@
 #include <Windows.h>
 #include <time.h>
 
-//function descriptions has been explained in header files
+//function descriptions was explained in header files
 using namespace std;
 char STRAIGHTLINEP = 186;
 
 string productList[] = { "VideoCart", "SoundCart", "Proccessor", "Keyboard", "Mouse", "Monitor", "Ram", "Harddisk", "LoudSpeaker", "SSDDisk", "Notebook", "Case", "FlashDisk", "Tablet", "MobilePhone", "Earphones", "Printer", "Scanner", "OptikScanner", "TvCart" };
-string  priceList[20] = { "560", "50", "500", "80", "30", "400", "120", "260", "250", "460", "1500", "100", "30", "700", "1200", "50", "350", "360", "200", "130" };
+string priceList[20] = { "560", "50", "500", "80", "30", "400", "120", "260", "250", "460", "1500", "100", "30", "700", "1200", "50", "350", "360", "200", "130" };
 
 Control controlP;
 

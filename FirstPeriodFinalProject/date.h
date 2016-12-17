@@ -8,15 +8,12 @@ using namespace std;
 class Date
 {
 private:
-	int day;
+	int day; //decralations
 	int month;
 	int year;
 	string date;
 public:
 	Date();
 
-	void setDate(string d);
-
-	string getDate();
-
+	string getDate(); //returns string date value
 };
